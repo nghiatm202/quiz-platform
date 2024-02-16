@@ -5,65 +5,54 @@ import cn from "classnames";
 interface QuizQuestionProps {
   question: string;
   answers: string[];
-  correctAnswer: string;
+  selectedAnswers: boolean[];
+  correctAnswer: string[];
   hint: string;
   checked: boolean;
-  selectedAnswerIndex: number | null;
+  showModal: boolean;
   accordionOpen: boolean;
   activeQuestion: number;
   totalQuestions: number;
-  onAnswerSelected: (answer: string, idx: number) => void;
-  onNextQuestion: () => void;
+  onAnswerSelected: (idx: number) => void;
   onToggleAccordion: () => void;
+  onSubmit: () => void;
+  onCloseModal: () => void;
 }
 
 const QuizQuestion: React.FC<QuizQuestionProps> = ({
   question,
   answers,
+  selectedAnswers,
   correctAnswer,
   hint,
   checked,
-  selectedAnswerIndex,
+  showModal,
   accordionOpen,
   activeQuestion,
   totalQuestions,
   onAnswerSelected,
-  onNextQuestion,
   onToggleAccordion,
+  onSubmit,
+  onCloseModal,
 }) => (
-  <>
-    <h3 className="font-bold text-lg mb-5">{question}</h3>
+  <div>
+    <h3 className="font-bold text-lg mb-5">
+      {question} {correctAnswer.length > 1 && "(Choose one or more)"}
+    </h3>
 
     <ul className="mb-10 flex gap-2 flex-col">
       {answers.map((answer, idx) => (
         <li
           key={idx}
-          onClick={() => onAnswerSelected(answer, idx)}
+          onClick={() => onAnswerSelected(idx)}
           className={cn(
-            "flex flex-col text-sm h-16 border cursor-pointer transition-colors px-2 justify-center",
+            "flex flex-col text-sm h-16 border cursor-pointer transition-colors px-2 justify-center hover:border-gray-600",
             {
-              "border-red-600 text-red-600":
-                checked &&
-                idx === selectedAnswerIndex &&
-                answer !== correctAnswer,
-              "border-primary text-primary":
-                checked &&
-                idx === selectedAnswerIndex &&
-                answer === correctAnswer,
+              "border-gray-600": checked && selectedAnswers[idx],
             }
           )}
         >
           <span>{answer}</span>
-
-          {checked && idx === selectedAnswerIndex && (
-            <span
-              className={cn("text-xs", {
-                "fade-in-up-animation": answer !== correctAnswer,
-              })}
-            >
-              {answer !== correctAnswer && "Please try again"}
-            </span>
-          )}
         </li>
       ))}
     </ul>
@@ -77,20 +66,48 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
     </div>
 
     {checked ? (
-      <Button onClick={onNextQuestion} className="w-full">
-        {activeQuestion === totalQuestions - 1 ? "Finish" : "Next"}
+      <Button onClick={onSubmit} className="w-full">
+        Submit
       </Button>
     ) : (
-      <Button
-        onClick={onNextQuestion}
-        disabled
-        variant="disabled"
-        className="w-full"
-      >
-        {activeQuestion === totalQuestions - 1 ? "Finish" : "Next"}
+      <Button onClick={onSubmit} disabled variant="disabled" className="w-full">
+        Submit
       </Button>
     )}
-  </>
+
+    {showModal && (
+      <div className="absolute inset-0 w-full flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div className="bg-white m-4 w-full p-4 rounded-lg shadow-lg">
+          <>
+            <p className="text-lg font-bold mb-4">
+              {selectedAnswers.every(
+                (selected, idx) =>
+                  selected === correctAnswer.includes(answers[idx])
+              )
+                ? "Correct Answer!"
+                : "Incorrect Answer"}
+            </p>
+            {selectedAnswers.every(
+              (selected, idx) =>
+                selected === correctAnswer.includes(answers[idx])
+            ) ? (
+              <p className="mb-4">You answered correctly!</p>
+            ) : (
+              <>
+                <p className="mb-4">
+                  The correct answer is: {correctAnswer.join(", ")}.
+                </p>
+              </>
+            )}
+          </>
+
+          <Button onClick={onCloseModal} className="w-full">
+            {activeQuestion === totalQuestions ? "Finish" : "Next"}
+          </Button>
+        </div>
+      </div>
+    )}
+  </div>
 );
 
 export default QuizQuestion;

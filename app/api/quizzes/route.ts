@@ -14,16 +14,26 @@ const quizzes = [
           "A built-in method to close files",
           "An event in JavaScript",
         ],
-        correctAnswer:
+        correctAnswer: [
           "A function inside another function that has access to its parent scope",
+        ],
         hint: "It helps in preserving the scope chain",
       },
       {
         id: 2,
-        question: "What is the output of typeof null?",
-        answers: ["object", "null", "undefined", "string"],
-        correctAnswer: "object",
-        hint: "Despite being a primitive type, typeof null returns object",
+        question: "What are some ways to define a variable in JavaScript?",
+        answers: [
+          "Using the 'var' keyword",
+          "Using the 'let' keyword",
+          "Using the 'const' keyword",
+          "Without any keyword (implicitly declaring global variables)",
+        ],
+        correctAnswer: [
+          "Using the 'var' keyword",
+          "Using the 'let' keyword",
+          "Using the 'const' keyword",
+        ],
+        hint: "There are multiple ways to declare variables in JavaScript depending on the desired scope and mutability.",
       },
       {
         id: 3,
@@ -34,7 +44,7 @@ const quizzes = [
           "Performs strict type conversion",
           "Checks for equality with type conversion",
         ],
-        correctAnswer: "Checks for equality without type conversion",
+        correctAnswer: ["Checks for equality without type conversion"],
         hint: "It's the strict equality operator",
       },
       {
@@ -46,8 +56,9 @@ const quizzes = [
           "Stopping the propagation of events",
           "Handling events asynchronously",
         ],
-        correctAnswer:
+        correctAnswer: [
           "The propagation of events from child to parent elements",
+        ],
         hint: "Events bubble up from the target element to its ancestors",
       },
       {
@@ -60,7 +71,7 @@ const quizzes = [
           "To restrict the use of certain keywords",
           "To allow asynchronous code execution",
         ],
-        correctAnswer: "To enforce stricter syntax rules",
+        correctAnswer: ["To enforce stricter syntax rules"],
         hint: "It helps to write cleaner and more secure code",
       },
     ],
@@ -73,7 +84,7 @@ const quizzes = [
         id: 1,
         question: "What is the time complexity of binary search?",
         answers: ["O(n)", "O(log n)", "O(n^2)", "O(1)"],
-        correctAnswer: "O(log n)",
+        correctAnswer: ["O(log n)"],
         hint: "It halves the search space at each step",
       },
       {
@@ -81,7 +92,7 @@ const quizzes = [
         question:
           "What data structure is typically used for implementing LIFO behavior?",
         answers: ["Queue", "Heap", "Stack", "Array"],
-        correctAnswer: "Stack",
+        correctAnswer: ["Stack"],
         hint: "Think about the Last-In-First-Out principle",
       },
       {
@@ -93,7 +104,7 @@ const quizzes = [
           "To implement recursive algorithms",
           "To perform arithmetic operations",
         ],
-        correctAnswer: "To efficiently search, insert, and delete data",
+        correctAnswer: ["To efficiently search, insert, and delete data"],
         hint: "It offers constant-time operations for these operations on average",
       },
       {
@@ -106,25 +117,28 @@ const quizzes = [
           "Better cache locality",
           "Lower memory consumption",
         ],
-        correctAnswer: "Constant-time insertion and deletion at any position",
+        correctAnswer: ["Constant-time insertion and deletion at any position"],
         hint: "Linked lists have dynamic memory allocation and can grow without resizing",
       },
       {
         id: 5,
-        question: "What is a priority queue?",
+        question:
+          "Which of the following are valid ways to declare a JavaScript function?",
         answers: [
-          "A queue that dequeues elements based on their arrival time",
-          "A queue where elements are arranged in random order",
-          "A queue where elements are arranged based on their priority",
-          "A queue that allows duplicate elements",
+          "Function declaration",
+          "Function expression",
+          "Arrow function",
+          "Method declaration",
         ],
-        correctAnswer:
-          "A queue where elements are arranged based on their priority",
-        hint: "Higher priority elements are dequeued before lower priority ones",
+        correctAnswer: [
+          "Function declaration",
+          "Function expression",
+          "Arrow function",
+        ],
+        hint: "JavaScript offers multiple syntaxes for defining functions to suit different use cases.",
       },
     ],
   },
-  // Add more collections as needed
 ];
 
 function getRandomQuiz() {
